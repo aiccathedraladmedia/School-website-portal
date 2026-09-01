@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Parent Dashboard | AIC Cathedral Comprehensive School</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .dashboard-page {
+            min-height: 100vh;
+            background: #f5f7f6;
+        }
+
+        .dashboard-header {
+            background: #166534;
+            color: white;
+            padding: 18px 0;
+        }
+
+        .dashboard-header-inner {
+            width: min(1100px, 92%);
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .dashboard-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dashboard-logo {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            color: #166534;
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+        }
+
+        .dashboard-brand h1 {
+            font-size: 18px;
+        }
+
+        .dashboard-brand p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .logout-button {
+            border: 1px solid rgba(255,255,255,0.5);
+            background: transparent;
+            color: white;
+            padding: 9px 15px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .dashboard-container {
+            width: min(1100px, 92%);
+            margin: 0 auto;
+            padding: 35px 0 60px;
+        }
+
+        .welcome-card {
+            background: white;
+            border-radius: 15px;
+            padding: 28px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 25px;
+        }
+
+        .welcome-card span {
+            color: #166534;
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .welcome-card h2 {
+            margin-top: 7px;
+            font-size: 30px;
+        }
+
+        .welcome-card p {
+            margin-top: 7px;
+            color: #6b7280;
+        }
+
+        .children-title {
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .children-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .child-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .child-avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: #dcfce7;
+            color: #166534;
+            display: grid;
+            place-items: center;
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .child-card h3 {
+            font-size: 21px;
+            margin-bottom: 5px;
+        }
+
+        .admission {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        .child-details {
+            display: grid;
+            gap: 9px;
+            margin-bottom: 20px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            font-size: 14px;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 8px;
+        }
+
+        .detail-row strong {
+            color: #374151;
+        }
+
+        .detail-row span {
+            color: #6b7280;
+            text-align: right;
+        }
+
+        .child-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .action-button {
+            padding: 10px 13px;
+            border-radius: 7px;
+            border: 1px solid #d1d5db;
+            background: white;
+            color: #166534;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .empty-state,
+        .loading-state,
+        .error-state {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        .error-state {
+            color: #991b1b;
+            background: #fef2f2;
+        }
+
+        @media (max-width: 700px) {
+            .dashboard-header-inner {
+                align-items: flex-start;
+            }
+
+            .children-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-card h2 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard-page">
+
+    <header class="dashboard-header">
+
+        <div class="dashboard-header-inner">
+
+            <div class="dashboard-brand">
+
+                <div class="dashboard-logo">
+                    AIC
+                </div>
+
+                <div>
+                    <h1>AIC Cathedral Comprehensive School</h1>
+                    <p>Parents Portal</p>
+                </div>
+
+            </div>
+
+            <button class="logout-button" id="logoutButton">
+                Sign Out
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <main class="dashboard-container">
+
+        <section class="welcome-card">
+
+            <span>Parent Dashboard</span>
+
+            <h2>
+                Welcome,
+                <span id="parentName">Parent</span>
+            </h2>
+
+            <p>
+                Manage and view information about your
+                linked children.
+            </p>
+
+        </section>
+
+
+        <h2 class="children-title">
+            My Children
+        </h2>
+
+
+        <section id="childrenContainer">
+
+            <div class="loading-state">
+                Loading your children's information...
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script type="module">
+
+    import { createClient } from
+    "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+
+    const SUPABASE_URL =
+        "https://kadejswwappuvigiiyai.supabase.co";
+
+    const SUPABASE_KEY =
+        "sb_publishable_DlL8Q5i5ci55vX3OuhnwcQ_ONaNx7-k";
+
+
+    const supabase =
+        createClient(SUPABASE_URL, SUPABASE_KEY);
+
+
+    const parentName =
+        document.getElementById("parentName");
+
+    const childrenContainer =
+        document.getElementById("childrenContainer");
+
+    const logoutButton =
+        document.getElementById("logoutButton");
+
+
+    function showError(message) {
+
+        childrenContainer.innerHTML = `
+            <div class="error-state">
+                ${message}
+            </div>
+        `;
+
+    }
+
+
+    function getInitials(firstName, lastName) {
+
+        const first =
+            firstName ? firstName.charAt(0) : "";
+
+        const last =
+            lastName ? lastName.charAt(0) : "";
+
+        return (first + last).toUpperCase();
+
+    }
+
+
+    async function loadDashboard() {
+
+        try {
+
+            /*
+             * Get the currently signed-in
+             * Supabase user.
+             */
+
+            const {
+                data: { user },
+                error: userError
+            } = await supabase.auth.getUser();
+
+
+            if (userError || !user) {
+
+                window.location.href =
+                    "index.html";
+
+                return;
+
+            }
+
+
+            /*
+             * Find the parent record connected
+             * to this authenticated account.
+             */
+
+            const {
+                data: parent,
+                error: parentError
+            } = await supabase
+                .from("parents")
+                .select("id, full_name, relationship, phone, email")
+                .eq("user_id", user.id)
+                .maybeSingle();
+
+
+            if (parentError) {
+                throw parentError;
+            }
+
+
+            if (!parent) {
+
+                showError(
+                    "Your account is not linked to a parent record."
+                );
+
+                return;
+
+            }
+
+
+            parentName.textContent =
+                parent.full_name || "Parent";
+
+
+            /*
+             * Get children linked to this parent.
+             */
+
+            const {
+                data: links,
+                error: linksError
+            } = await supabase
+                .from("student_parents")
+                .select("student_id, is_primary")
+                .eq("parent_id", parent.id);
+
+
+            if (linksError) {
+                throw linksError;
+            }
+
+
+            if (!links || links.length === 0) {
+
+                childrenContainer.innerHTML = `
+                    <div class="empty-state">
+                        No children are currently linked
+                        to your parent account.
+                    </div>
+                `;
+
+                return;
+
+            }
+
+
+            const studentIds =
+                links.map(link => link.student_id);
+
+
+            /*
+             * Get student records.
+             */
+
+            const {
+                data: students,
+                error: studentsError
+            } = await supabase
+                .from("students")
+                .select(`
+                    id,
+                    admission_number,
+                    first_name,
+                    middle_name,
+                    last_name,
+                    gender,
+                    date_of_birth,
+                    class_id,
+                    stream_id,
+                    admission_date,
+                    status
+                `)
+                .in("id", studentIds);
+
+
+            if (studentsError) {
+                throw studentsError;
+            }
+
+
+            if (!students || students.length === 0) {
+
+                childrenContainer.innerHTML = `
+                    <div class="empty-state">
+                        No student information was found.
+                    </div>
+                `;
+
+                return;
+
+            }
+
+
+            childrenContainer.innerHTML = "";
+
+
+            students.forEach(student => {
+
+                const fullName = [
+                    student.first_name,
+                    student.middle_name,
+                    student.last_name
+                ]
+                .filter(Boolean)
+                .join(" ");
+
+
+                const initials =
+                    getInitials(
+                        student.first_name,
+                        student.last_name
+                    );
+
+
+                const card =
+                    document.createElement("article");
+
+                card.className = "child-card";
+
+
+                card.innerHTML = `
+
+                    <div class="child-avatar">
+                        ${initials}
+                    </div>
+
+                    <h3>${fullName}</h3>
+
+                    <p class="admission">
+                        Admission No:
+                        ${student.admission_number || "—"}
+                    </p>
+
+                    <div class="child-details">
+
+                        <div class="detail-row">
+                            <strong>Gender</strong>
+                            <span>
+                                ${student.gender || "—"}
+                            </span>
+                        </div>
+
+                        <div class="detail-row">
+                            <strong>Status</strong>
+                            <span>
+                                ${student.status || "—"}
+                            </span>
+                        </div>
+
+                        <div class="detail-row">
+                            <strong>Class ID</strong>
+                            <span>
+                                ${student.class_id || "—"}
+                            </span>
+                        </div>
+
+                        <div class="detail-row">
+                            <strong>Stream ID</strong>
+                            <span>
+                                ${student.stream_id || "—"}
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="child-actions">
+
+                        <button
+                            class="action-button"
+                            onclick="alert('Attendance section coming next.')">
+                            Attendance
+                        </button>
+
+                        <button
+                            class="action-button"
+                            onclick="alert('Results section coming next.')">
+                            Results
+                        </button>
+
+                        <button
+                            class="action-button"
+                            onclick="alert('Fees section coming next.')">
+                            Fees
+                        </button>
+
+                    </div>
+                `;
+
+
+                childrenContainer.appendChild(card);
+
+            });
+
+        } catch (error) {
+
+            console.error(error);
+
+            showError(
+                "Unable to load your dashboard. Please try again."
+            );
+
+        }
+
+    }
+
+
+    logoutButton.addEventListener(
+        "click",
+        async function() {
+
+            await supabase.auth.signOut();
+
+            sessionStorage.clear();
+
+            window.location.href =
+                "index.html";
+
+        }
+    );
+
+
+    loadDashboard();
+
+</script>
+
+</body>
+  </html>
