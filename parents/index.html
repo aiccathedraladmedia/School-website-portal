@@ -26,47 +26,71 @@
 
             <div class="portal-title">
                 <span>Parents Portal</span>
+
                 <h2>Welcome back</h2>
+
                 <p>
-                    Sign in to access your child's school information.
+                    Sign in using your parent code and password.
                 </p>
             </div>
+
 
             <form id="loginForm">
 
                 <div class="form-group">
-                    <label for="email">Email Address</label>
+
+                    <label for="parentCode">
+                        Parent Code
+                    </label>
 
                     <input
-                        type="email"
-                        id="email"
-                        placeholder="Enter your email"
+                        type="text"
+                        id="parentCode"
+                        placeholder="Example: AIC-P001"
+                        autocomplete="username"
                         required
                     >
+
                 </div>
 
+
                 <div class="form-group">
-                    <label for="password">Password</label>
+
+                    <label for="password">
+                        Password
+                    </label>
 
                     <input
                         type="password"
                         id="password"
                         placeholder="Enter your password"
+                        autocomplete="current-password"
                         required
                     >
+
                 </div>
+
 
                 <button type="submit" id="loginButton">
                     Sign In
                 </button>
 
+
                 <div id="loginMessage" class="message"></div>
 
             </form>
 
+
             <div class="login-footer">
-                <p>Secure Parent Access</p>
-                <a href="../index.html">← Back to School Website</a>
+
+                <p>
+                    Your parent code is provided by the school.
+                </p>
+
+                <a href="../index.html">
+                    ← Back to School Website
+                </a>
+
             </div>
 
         </section>
@@ -80,29 +104,34 @@
         "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
 
-        // AIC Cathedral Supabase project
         const SUPABASE_URL =
             "https://kadejswwappuvigiiyai.supabase.co";
+
 
         const SUPABASE_KEY =
             "sb_publishable_DlL8Q5i5ci55vX3OuhnwcQ_ONaNx7-k";
 
 
         const supabase =
-            createClient(SUPABASE_URL, SUPABASE_KEY);
+            createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
 
 
         const loginForm =
             document.getElementById("loginForm");
 
+
         const loginButton =
             document.getElementById("loginButton");
+
 
         const loginMessage =
             document.getElementById("loginMessage");
 
 
-        function showMessage(message, type = "error") {
+        function showMessage(message, type) {
 
             loginMessage.textContent = message;
 
@@ -112,120 +141,203 @@
         }
 
 
-        loginForm.addEventListener("submit", async function(event) {
+        loginForm.addEventListener(
+            "submit",
+            async function(event) {
 
-            event.preventDefault();
-
-            const email =
-                document.getElementById("email").value.trim();
-
-            const password =
-                document.getElementById("password").value;
+                event.preventDefault();
 
 
-            loginButton.disabled = true;
-            loginButton.textContent = "Signing in...";
-
-            showMessage("Checking your account...", "info");
-
-
-            try {
-
-                const { data, error } =
-                    await supabase.auth.signInWithPassword({
-                        email: email,
-                        password: password
-                    });
+                const parentCode =
+                    document
+                        .getElementById("parentCode")
+                        .value
+                        .trim()
+                        .toUpperCase();
 
 
-                if (error) {
-                    throw error;
+                const password =
+                    document
+                        .getElementById("password")
+                        .value;
+
+
+                if (!parentCode || !password) {
+
+                    showMessage(
+                        "Please enter your parent code and password.",
+                        "error"
+                    );
+
+                    return;
+
                 }
 
 
-                if (!data.user) {
-                    throw new Error("Unable to sign in.");
-                }
+                loginButton.disabled = true;
+
+                loginButton.textContent =
+                    "Signing in...";
 
 
-                /*
-                 * Confirm that this authenticated account
-                 * is connected to a parent record.
-                 */
+                showMessage(
+                    "Checking your account...",
+                    "info"
+                );
 
-                const { data: parent, error: parentError } =
-                    await supabase
+
+                try {
+
+                    /*
+                     * Find the parent using the special
+                     * parent code.
+                     */
+
+                    const {
+                        data: parent,
+                        error: parentError
+                    } = await supabase
                         .from("parents")
-                        .select("id, full_name, relationship, phone, email")
-                        .eq("user_id", data.user.id)
+                        .select(
+                            "id, full_name, email, parent_code"
+                        )
+                        .eq(
+                            "parent_code",
+                            parentCode
+                        )
                         .maybeSingle();
 
 
-                if (parentError) {
-                    throw parentError;
-                }
+                    if (parentError) {
+                        throw parentError;
+                    }
 
 
-                if (!parent) {
+                    if (!parent) {
 
-                    await supabase.auth.signOut();
+                        throw new Error(
+                            "Invalid parent code."
+                        );
 
-                    throw new Error(
-                        "Your account is not linked to a parent record. Please contact the school."
+                    }
+
+
+                    /*
+                     * The email is kept inside Supabase
+                     * for authentication, but the parent
+                     * does not need to enter it.
+                     */
+
+                    if (!parent.email) {
+
+                        throw new Error(
+                            "Your parent account does not have an email configured. Please contact the school."
+                        );
+
+                    }
+
+
+                    /*
+                     * Authenticate with Supabase.
+                     */
+
+                    const {
+                        data,
+                        error
+                    } = await supabase.auth.signInWithPassword({
+
+                        email: parent.email,
+
+                        password: password
+
+                    });
+
+
+                    if (error) {
+                        throw error;
+                    }
+
+
+                    if (!data.user) {
+
+                        throw new Error(
+                            "Unable to sign in."
+                        );
+
+                    }
+
+
+                    /*
+                     * Confirm the authenticated account
+                     * belongs to the same parent record.
+                     */
+
+                    if (parent.email !== data.user.email) {
+
+                        await supabase.auth.signOut();
+
+                        throw new Error(
+                            "Account verification failed."
+                        );
+
+                    }
+
+
+                    sessionStorage.setItem(
+                        "parent_name",
+                        parent.full_name || ""
                     );
 
+
+                    sessionStorage.setItem(
+                        "parent_id",
+                        String(parent.id)
+                    );
+
+
+                    sessionStorage.setItem(
+                        "parent_code",
+                        parent.parent_code
+                    );
+
+
+                    showMessage(
+                        "Login successful. Opening your portal...",
+                        "success"
+                    );
+
+
+                    setTimeout(function() {
+
+                        window.location.href =
+                            "dashboard.html";
+
+                    }, 700);
+
+
+                } catch (error) {
+
+                    console.error(error);
+
+
+                    showMessage(
+                        error.message ||
+                        "Unable to sign in. Please check your details.",
+                        "error"
+                    );
+
+
+                    loginButton.disabled = false;
+
+                    loginButton.textContent =
+                        "Sign In";
+
                 }
 
-
-                /*
-                 * Store only basic session information.
-                 * The authenticated Supabase session remains
-                 * managed by Supabase.
-                 */
-
-                sessionStorage.setItem(
-                    "parent_name",
-                    parent.full_name || ""
-                );
-
-                sessionStorage.setItem(
-                    "parent_id",
-                    String(parent.id)
-                );
-
-
-                showMessage(
-                    "Login successful. Opening your portal...",
-                    "success"
-                );
-
-
-                setTimeout(function() {
-
-                    window.location.href =
-                        "dashboard.html";
-
-                }, 700);
-
-
-            } catch (error) {
-
-                console.error(error);
-
-                showMessage(
-                    error.message ||
-                    "Unable to sign in. Please check your details.",
-                    "error"
-                );
-
-                loginButton.disabled = false;
-                loginButton.textContent = "Sign In";
-
             }
-
-        });
+        );
 
     </script>
 
 </body>
-  </html>
+                    </html>
