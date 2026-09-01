@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Parents Portal | AIC Cathedral Comprehensive School</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="portal-page">
+
+        <section class="login-card">
+
+            <div class="brand">
+                <div class="logo">AIC</div>
+
+                <div>
+                    <h1>AIC Cathedral</h1>
+                    <p>Comprehensive School</p>
+                </div>
+            </div>
+
+            <div class="portal-title">
+                <span>Parents Portal</span>
+                <h2>Welcome back</h2>
+                <p>
+                    Sign in to access your child's school information.
+                </p>
+            </div>
+
+            <form id="loginForm">
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+                </div>
+
+                <button type="submit" id="loginButton">
+                    Sign In
+                </button>
+
+                <div id="loginMessage" class="message"></div>
+
+            </form>
+
+            <div class="login-footer">
+                <p>Secure Parent Access</p>
+                <a href="../index.html">← Back to School Website</a>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script type="module">
+
+        import { createClient } from
+        "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+
+        // AIC Cathedral Supabase project
+        const SUPABASE_URL =
+            "https://kadejswwappuvigiiyai.supabase.co";
+
+        const SUPABASE_KEY =
+            "sb_publishable_DlL8Q5i5ci55vX3OuhnwcQ_ONaNx7-k";
+
+
+        const supabase =
+            createClient(SUPABASE_URL, SUPABASE_KEY);
+
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        const loginButton =
+            document.getElementById("loginButton");
+
+        const loginMessage =
+            document.getElementById("loginMessage");
+
+
+        function showMessage(message, type = "error") {
+
+            loginMessage.textContent = message;
+
+            loginMessage.className =
+                "message " + type;
+
+        }
+
+
+        loginForm.addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+            const email =
+                document.getElementById("email").value.trim();
+
+            const password =
+                document.getElementById("password").value;
+
+
+            loginButton.disabled = true;
+            loginButton.textContent = "Signing in...";
+
+            showMessage("Checking your account...", "info");
+
+
+            try {
+
+                const { data, error } =
+                    await supabase.auth.signInWithPassword({
+                        email: email,
+                        password: password
+                    });
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                if (!data.user) {
+                    throw new Error("Unable to sign in.");
+                }
+
+
+                /*
+                 * Confirm that this authenticated account
+                 * is connected to a parent record.
+                 */
+
+                const { data: parent, error: parentError } =
+                    await supabase
+                        .from("parents")
+                        .select("id, full_name, relationship, phone, email")
+                        .eq("user_id", data.user.id)
+                        .maybeSingle();
+
+
+                if (parentError) {
+                    throw parentError;
+                }
+
+
+                if (!parent) {
+
+                    await supabase.auth.signOut();
+
+                    throw new Error(
+                        "Your account is not linked to a parent record. Please contact the school."
+                    );
+
+                }
+
+
+                /*
+                 * Store only basic session information.
+                 * The authenticated Supabase session remains
+                 * managed by Supabase.
+                 */
+
+                sessionStorage.setItem(
+                    "parent_name",
+                    parent.full_name || ""
+                );
+
+                sessionStorage.setItem(
+                    "parent_id",
+                    String(parent.id)
+                );
+
+
+                showMessage(
+                    "Login successful. Opening your portal...",
+                    "success"
+                );
+
+
+                setTimeout(function() {
+
+                    window.location.href =
+                        "dashboard.html";
+
+                }, 700);
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                showMessage(
+                    error.message ||
+                    "Unable to sign in. Please check your details.",
+                    "error"
+                );
+
+                loginButton.disabled = false;
+                loginButton.textContent = "Sign In";
+
+            }
+
+        });
+
+    </script>
+
+</body>
+  </html>
