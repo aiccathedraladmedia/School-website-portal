@@ -1,343 +1,398 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Parents Portal | AIC Cathedral Comprehensive School</title>
-
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parents Portal | AIC Cathedral Comprehensive School</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <main class="portal-page">
+  <main class="portal-page">
 
-        <section class="login-card">
+    <section class="login-card">
 
-            <div class="brand">
-                <div class="logo">AIC</div>
+      <div class="brand">
+        <div class="logo">AIC</div>
 
-                <div>
-                    <h1>AIC Cathedral</h1>
-                    <p>Comprehensive School</p>
-                </div>
-            </div>
+        <div>
+          <h1>AIC Cathedral</h1>
+          <p>Comprehensive School</p>
+        </div>
+      </div>
 
-            <div class="portal-title">
-                <span>Parents Portal</span>
+      <div class="portal-title">
+        <span>Parents Portal</span>
 
-                <h2>Welcome back</h2>
+        <h2>Welcome</h2>
 
-                <p>
-                    Sign in using your parent code and password.
-                </p>
-            </div>
+        <p>
+          Enter your child's portal code and your registered
+          phone number to continue.
+        </p>
+      </div>
 
+      <form id="loginForm">
 
-            <form id="loginForm">
+        <div class="form-group">
 
-                <div class="form-group">
+          <label for="portalCode">
+            Student Portal Code
+          </label>
 
-                    <label for="parentCode">
-                        Parent Code
-                    </label>
+          <input
+            type="text"
+            id="portalCode"
+            placeholder="Example: 2D2777C121"
+            autocomplete="off"
+            required
+          >
 
-                    <input
-                        type="text"
-                        id="parentCode"
-                        placeholder="Example: AIC-P001"
-                        autocomplete="username"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="password">
-                        Password
-                    </label>
-
-                    <input
-                        type="password"
-                        id="password"
-                        placeholder="Enter your password"
-                        autocomplete="current-password"
-                        required
-                    >
-
-                </div>
+        </div>
 
 
-                <button type="submit" id="loginButton">
-                    Sign In
-                </button>
+        <div class="form-group">
+
+          <label for="phone">
+            Registered Parent Phone
+          </label>
+
+          <input
+            type="tel"
+            id="phone"
+            placeholder="Example: 0712345678"
+            autocomplete="tel"
+            required
+          >
+
+        </div>
 
 
-                <div id="loginMessage" class="message"></div>
+        <button type="submit" id="loginButton">
+          Login
+        </button>
 
-            </form>
+        <div id="loginMessage" class="message"></div>
 
-
-            <div class="login-footer">
-
-                <p>
-                    Your parent code is provided by the school.
-                </p>
-
-                <a href="../index.html">
-                    ← Back to School Website
-                </a>
-
-            </div>
-
-        </section>
-
-    </main>
+      </form>
 
 
-    <script type="module">
+      <div class="login-footer">
 
-        import { createClient } from
-        "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+        <p>
+          Your child's portal code is provided by the school.
+        </p>
 
+        <a href="../index.html">
+          ← Back to School Website
+        </a>
 
-        const SUPABASE_URL =
-            "https://kadejswwappuvigiiyai.supabase.co";
+      </div>
 
+    </section>
 
-        const SUPABASE_KEY =
-            "sb_publishable_DlL8Q5i5ci55vX3OuhnwcQ_ONaNx7-k";
-
-
-        const supabase =
-            createClient(
-                SUPABASE_URL,
-                SUPABASE_KEY
-            );
+  </main>
 
 
-        const loginForm =
-            document.getElementById("loginForm");
+  <script type="module">
+
+    import { createClient } from
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
 
-        const loginButton =
-            document.getElementById("loginButton");
+    const SUPABASE_URL =
+      "https://kadejswwappuvigiiyai.supabase.co";
 
 
-        const loginMessage =
-            document.getElementById("loginMessage");
+    const SUPABASE_KEY =
+      "sb_publishable_DlL8Q5i5ci55vX3OuhnwcQ_ONaNx7-k";
 
 
-        function showMessage(message, type) {
+    const supabase =
+      createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
 
-            loginMessage.textContent = message;
 
-            loginMessage.className =
-                "message " + type;
+    const form =
+      document.getElementById("loginForm");
+
+
+    const button =
+      document.getElementById("loginButton");
+
+
+    const message =
+      document.getElementById("loginMessage");
+
+
+    function showMessage(text, type) {
+
+      message.textContent = text;
+
+      message.className =
+        "message " + type;
+
+    }
+
+
+    function normalizePhone(phone) {
+
+      let value =
+        phone.replace(/\s+/g, "").trim();
+
+
+      if (value.startsWith("+254")) {
+
+        return "0" + value.substring(4);
+
+      }
+
+
+      if (value.startsWith("254")) {
+
+        return "0" + value.substring(3);
+
+      }
+
+
+      return value;
+
+    }
+
+
+    form.addEventListener(
+      "submit",
+      async function(event) {
+
+        event.preventDefault();
+
+
+        const portalCode =
+          document
+            .getElementById("portalCode")
+            .value
+            .trim()
+            .toUpperCase();
+
+
+        const phone =
+          normalizePhone(
+            document
+              .getElementById("phone")
+              .value
+          );
+
+
+        if (!portalCode || !phone) {
+
+          showMessage(
+            "Please enter the portal code and phone number.",
+            "error"
+          );
+
+          return;
 
         }
 
 
-        loginForm.addEventListener(
-            "submit",
-            async function(event) {
+        button.disabled = true;
 
-                event.preventDefault();
+        button.textContent =
+          "Checking...";
 
 
-                const parentCode =
-                    document
-                        .getElementById("parentCode")
-                        .value
-                        .trim()
-                        .toUpperCase();
-
-
-                const password =
-                    document
-                        .getElementById("password")
-                        .value;
-
-
-                if (!parentCode || !password) {
-
-                    showMessage(
-                        "Please enter your parent code and password.",
-                        "error"
-                    );
-
-                    return;
-
-                }
-
-
-                loginButton.disabled = true;
-
-                loginButton.textContent =
-                    "Signing in...";
-
-
-                showMessage(
-                    "Checking your account...",
-                    "info"
-                );
-
-
-                try {
-
-                    /*
-                     * Find the parent using the special
-                     * parent code.
-                     */
-
-                    const {
-                        data: parent,
-                        error: parentError
-                    } = await supabase
-                        .from("parents")
-                        .select(
-                            "id, full_name, email, parent_code"
-                        )
-                        .eq(
-                            "parent_code",
-                            parentCode
-                        )
-                        .maybeSingle();
-
-
-                    if (parentError) {
-                        throw parentError;
-                    }
-
-
-                    if (!parent) {
-
-                        throw new Error(
-                            "Invalid parent code."
-                        );
-
-                    }
-
-
-                    /*
-                     * The email is kept inside Supabase
-                     * for authentication, but the parent
-                     * does not need to enter it.
-                     */
-
-                    if (!parent.email) {
-
-                        throw new Error(
-                            "Your parent account does not have an email configured. Please contact the school."
-                        );
-
-                    }
-
-
-                    /*
-                     * Authenticate with Supabase.
-                     */
-
-                    const {
-                        data,
-                        error
-                    } = await supabase.auth.signInWithPassword({
-
-                        email: parent.email,
-
-                        password: password
-
-                    });
-
-
-                    if (error) {
-                        throw error;
-                    }
-
-
-                    if (!data.user) {
-
-                        throw new Error(
-                            "Unable to sign in."
-                        );
-
-                    }
-
-
-                    /*
-                     * Confirm the authenticated account
-                     * belongs to the same parent record.
-                     */
-
-                    if (parent.email !== data.user.email) {
-
-                        await supabase.auth.signOut();
-
-                        throw new Error(
-                            "Account verification failed."
-                        );
-
-                    }
-
-
-                    sessionStorage.setItem(
-                        "parent_name",
-                        parent.full_name || ""
-                    );
-
-
-                    sessionStorage.setItem(
-                        "parent_id",
-                        String(parent.id)
-                    );
-
-
-                    sessionStorage.setItem(
-                        "parent_code",
-                        parent.parent_code
-                    );
-
-
-                    showMessage(
-                        "Login successful. Opening your portal...",
-                        "success"
-                    );
-
-
-                    setTimeout(function() {
-
-                        window.location.href =
-                            "dashboard.html";
-
-                    }, 700);
-
-
-                } catch (error) {
-
-                    console.error(error);
-
-
-                    showMessage(
-                        error.message ||
-                        "Unable to sign in. Please check your details.",
-                        "error"
-                    );
-
-
-                    loginButton.disabled = false;
-
-                    loginButton.textContent =
-                        "Sign In";
-
-                }
-
-            }
+        showMessage(
+          "Verifying your details...",
+          "info"
         );
 
-    </script>
+
+        try {
+
+          /*
+           * Find the student using the
+           * automatically generated code.
+           */
+
+          const {
+            data: student,
+            error: studentError
+          } = await supabase
+            .from("students")
+            .select(
+              "id, first_name, middle_name, last_name, portal_code"
+            )
+            .eq(
+              "portal_code",
+              portalCode
+            )
+            .maybeSingle();
+
+
+          if (studentError) {
+
+            throw studentError;
+
+          }
+
+
+          if (!student) {
+
+            throw new Error(
+              "Invalid student portal code."
+            );
+
+          }
+
+
+          /*
+           * Find a parent linked to this
+           * particular student.
+           */
+
+          const {
+            data: relationship,
+            error: relationshipError
+          } = await supabase
+            .from("student_parents")
+            .select(`
+              parent_id,
+              is_primary,
+              parents (
+                id,
+                full_name,
+                phone
+              )
+            `)
+            .eq(
+              "student_id",
+              student.id
+            );
+
+
+          if (relationshipError) {
+
+            throw relationshipError;
+
+          }
+
+
+          /*
+           * Compare the supplied phone number
+           * against the phone numbers of the
+           * parents linked to this student.
+           */
+
+          const matchedParent =
+            relationship?.find(
+              item => {
+
+                const parentPhone =
+                  normalizePhone(
+                    item.parents?.phone || ""
+                  );
+
+                return parentPhone === phone;
+
+              }
+            );
+
+
+          if (!matchedParent) {
+
+            throw new Error(
+              "The phone number does not match a parent registered for this student."
+            );
+
+          }
+
+
+          /*
+           * Save the verified session information.
+           */
+
+          sessionStorage.setItem(
+            "parent_logged_in",
+            "true"
+          );
+
+
+          sessionStorage.setItem(
+            "student_id",
+            String(student.id)
+          );
+
+
+          sessionStorage.setItem(
+            "student_name",
+            [
+              student.first_name,
+              student.middle_name,
+              student.last_name
+            ]
+              .filter(Boolean)
+              .join(" ")
+          );
+
+
+          sessionStorage.setItem(
+            "portal_code",
+            student.portal_code
+          );
+
+
+          sessionStorage.setItem(
+            "parent_id",
+            String(matchedParent.parent_id)
+          );
+
+
+          sessionStorage.setItem(
+            "parent_name",
+            matchedParent.parents.full_name || ""
+          );
+
+
+          showMessage(
+            "Login successful. Opening your child's portal...",
+            "success"
+          );
+
+
+          setTimeout(() => {
+
+            window.location.href =
+              "dashboard.html";
+
+          }, 700);
+
+
+        } catch (error) {
+
+          console.error(error);
+
+
+          showMessage(
+            error.message ||
+            "Unable to verify your details.",
+            "error"
+          );
+
+
+          button.disabled = false;
+
+          button.textContent =
+            "Login";
+
+        }
+
+      }
+    );
+
+  </script>
 
 </body>
-                    </html>
+    </html>
