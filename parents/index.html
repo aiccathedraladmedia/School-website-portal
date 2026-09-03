@@ -1,266 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>
-    Parents Portal | AIC Cathedral Comprehensive School
-  </title>
-
-  <link
-    rel="stylesheet"
-    href="../css/style.css"
-  >
+  <title>Parents Portal | AIC Cathedral Comprehensive School</title>
 
   <style>
-
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       background: #f4f7fb;
       color: #172033;
+      min-height: 100vh;
     }
 
-    .portal-page {
+    .page {
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 24px;
+      padding: 20px;
+      background:
+        linear-gradient(
+          135deg,
+          #071d49 0%,
+          #0b3475 55%,
+          #f4f7fb 55%
+        );
     }
 
-    .login-card {
+    .card {
       width: 100%;
-      max-width: 480px;
-      background: white;
-      border-radius: 18px;
-      padding: 32px;
-      box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.10);
+      max-width: 460px;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 34px 28px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
     }
 
-    .brand {
+    .school {
       text-align: center;
-      margin-bottom: 26px;
+      margin-bottom: 28px;
     }
 
     .logo {
-      width: 68px;
-      height: 68px;
-      margin: 0 auto 14px;
+      width: 72px;
+      height: 72px;
       border-radius: 50%;
-      background: #0b2d5c;
+      background: #0b3475;
       color: #f4c542;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+      font-size: 24px;
       font-weight: bold;
-      font-size: 22px;
+      border: 4px solid #f4c542;
     }
 
-    .brand h1 {
-      margin: 0;
-      color: #0b2d5c;
-      font-size: 25px;
+    .school h1 {
+      color: #071d49;
+      font-size: 23px;
+      margin-bottom: 5px;
+      line-height: 1.25;
     }
 
-    .brand p {
-      margin: 6px 0 0;
-      color: #666;
+    .school p {
+      color: #667085;
+      font-size: 14px;
     }
 
     .portal-title {
       text-align: center;
-      margin-bottom: 25px;
-    }
-
-    .portal-title span {
-      display: inline-block;
-      background: #f4c542;
-      color: #172033;
-      padding: 7px 14px;
-      border-radius: 20px;
-      font-weight: bold;
-      margin-bottom: 12px;
+      margin-bottom: 24px;
     }
 
     .portal-title h2 {
-      margin: 5px 0 12px;
-      color: #0b2d5c;
+      color: #071d49;
+      font-size: 25px;
+      margin-bottom: 8px;
     }
 
     .portal-title p {
-      color: #666;
-      line-height: 1.6;
-      margin: 0;
+      color: #667085;
+      font-size: 14px;
+      line-height: 1.5;
     }
 
     .form-group {
       margin-bottom: 18px;
     }
 
-    .form-group label {
+    label {
       display: block;
       font-weight: bold;
+      color: #344054;
       margin-bottom: 8px;
+      font-size: 14px;
     }
 
-    .form-group input {
+    input {
       width: 100%;
-      padding: 14px;
-      border: 1px solid #ccd4df;
+      padding: 14px 15px;
+      border: 1px solid #d0d5dd;
       border-radius: 10px;
       font-size: 16px;
       outline: none;
+      transition: 0.2s;
+      background: #ffffff;
     }
 
-    .form-group input:focus {
-      border-color: #0b2d5c;
-      box-shadow:
-        0 0 0 3px rgba(11, 45, 92, 0.10);
+    input:focus {
+      border-color: #0b3475;
+      box-shadow: 0 0 0 3px rgba(11, 52, 117, 0.1);
     }
 
-    .login-button {
+    .hint {
+      margin-top: 7px;
+      font-size: 12px;
+      color: #667085;
+    }
+
+    button {
       width: 100%;
+      padding: 15px;
       border: none;
       border-radius: 10px;
-      padding: 14px;
-      background: #0b2d5c;
-      color: white;
+      background: #0b3475;
+      color: #ffffff;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
+      transition: 0.2s;
     }
 
-    .login-button:hover {
-      opacity: 0.94;
+    button:hover {
+      background: #071d49;
     }
 
-    .login-button:disabled {
-      opacity: 0.6;
+    button:disabled {
+      opacity: 0.65;
       cursor: not-allowed;
     }
 
     .message {
       display: none;
-      margin-top: 16px;
-      padding: 12px;
-      border-radius: 9px;
-      text-align: center;
+      margin-top: 18px;
+      padding: 13px;
+      border-radius: 10px;
+      font-size: 14px;
       line-height: 1.5;
     }
 
-    .message.info {
+    .message.show {
       display: block;
-      background: #e9f2ff;
-      color: #174a8b;
     }
 
     .message.error {
-      display: block;
-      background: #ffecec;
-      color: #a30000;
+      background: #fef3f2;
+      color: #b42318;
+      border: 1px solid #fecdca;
     }
 
     .message.success {
-      display: block;
-      background: #eaf8ee;
-      color: #16713a;
+      background: #ecfdf3;
+      color: #027a48;
+      border: 1px solid #abefc6;
     }
 
-    .login-footer {
+    .message.info {
+      background: #eff8ff;
+      color: #175cd3;
+      border: 1px solid #b2ddff;
+    }
+
+    .footer {
       text-align: center;
-      margin-top: 24px;
-      color: #777;
-      font-size: 14px;
-      line-height: 1.6;
+      margin-top: 25px;
+      padding-top: 18px;
+      border-top: 1px solid #eaecf0;
     }
 
-    .login-footer a {
-      color: #0b2d5c;
-      font-weight: bold;
+    .footer p {
+      font-size: 12px;
+      color: #667085;
+      line-height: 1.5;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 12px;
+      color: #0b3475;
       text-decoration: none;
+      font-size: 13px;
+      font-weight: bold;
     }
 
-    .login-footer a:hover {
+    .back-link:hover {
       text-decoration: underline;
     }
 
-    @media (max-width: 500px) {
-
-      .portal-page {
-        padding: 14px;
+    @media (max-width: 480px) {
+      .page {
+        padding: 12px;
       }
 
-      .login-card {
-        padding: 24px 18px;
+      .card {
+        padding: 28px 20px;
       }
 
-      .brand h1 {
-        font-size: 22px;
+      .school h1 {
+        font-size: 20px;
       }
 
+      .portal-title h2 {
+        font-size: 23px;
+      }
     }
-
   </style>
 </head>
 
-
 <body>
 
-  <main class="portal-page">
+  <div class="page">
 
-    <section class="login-card">
+    <div class="card">
 
-      <div class="brand">
+      <!-- SCHOOL -->
+      <div class="school">
 
         <div class="logo">
           AIC
         </div>
 
         <h1>
-          AIC Cathedral
+          AIC Cathedral Comprehensive School
         </h1>
 
         <p>
-          Comprehensive School
+          Gilgil, Nakuru County, Kenya
         </p>
 
       </div>
 
 
+      <!-- PORTAL -->
       <div class="portal-title">
 
-        <span>
-          Parents Portal
-        </span>
-
         <h2>
-          Welcome
+          Parents Portal
         </h2>
 
         <p>
-          Enter your child's portal code and
-          your registered phone number to
-          access the Parents Portal.
+          Enter your child's special portal code and
+          the parent phone number registered with the school.
         </p>
 
       </div>
 
 
+      <!-- LOGIN FORM -->
       <form id="loginForm">
 
         <div class="form-group">
@@ -278,13 +283,17 @@
             required
           >
 
+          <div class="hint">
+            Your child's unique portal code is provided by the school.
+          </div>
+
         </div>
 
 
         <div class="form-group">
 
           <label for="phone">
-            Registered Parent Phone
+            Registered Parent Phone Number
           </label>
 
           <input
@@ -295,115 +304,127 @@
             required
           >
 
+          <div class="hint">
+            Enter the phone number registered with the school.
+          </div>
+
         </div>
 
 
         <button
           type="submit"
           id="loginButton"
-          class="login-button"
         >
-          Login
+          Login to Parents Portal
         </button>
-
-
-        <div
-          id="loginMessage"
-          class="message"
-        ></div>
 
       </form>
 
 
-      <div class="login-footer">
+      <!-- MESSAGE -->
+      <div
+        id="message"
+        class="message"
+      ></div>
+
+
+      <!-- FOOTER -->
+      <div class="footer">
 
         <p>
-          Your child's portal code is provided
-          by the school.
+          Your child's portal code is unique and is provided
+          by AIC Cathedral Comprehensive School.
         </p>
 
-        <p>
-          Keep your portal code private.
-        </p>
-
-        <a href="../index.html">
+        <a
+          href="../index.html"
+          class="back-link"
+        >
           ← Back to School Website
         </a>
 
       </div>
 
-    </section>
+    </div>
 
-  </main>
+  </div>
 
 
+  <!-- SUPABASE -->
   <script type="module">
 
     import {
       createClient
-    }
-    from
-      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+    } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
 
-    // ---------------------------------
-    // SUPABASE CONFIGURATION
-    // ---------------------------------
+    /*
+     * =====================================================
+     * SUPABASE CONFIGURATION
+     * =====================================================
+     */
 
     const SUPABASE_URL =
-      "https://kadejswwapugivigiyai.supabase.co";
+      "https://kadejswwappuvigiiyai.supabase.co";
 
-    const SUPABASE_KEY =
-      "sb_publishable_DlLBQ5iC15x5X3OuhnwcQ_0NAxN7-k";
+    const SUPABASE_ANON_KEY =
+      "sb_publishable_DlL8Q5i5ci55vX3OuhnwcQ_ONaNx7-k";
 
+
+    /*
+     * Create Supabase client
+     */
 
     const supabase =
       createClient(
         SUPABASE_URL,
-        SUPABASE_KEY
+        SUPABASE_ANON_KEY
       );
 
 
-    // ---------------------------------
-    // PAGE ELEMENTS
-    // ---------------------------------
+    /*
+     * =====================================================
+     * PAGE ELEMENTS
+     * =====================================================
+     */
 
     const form =
-      document.getElementById(
-        "loginForm"
-      );
+      document.getElementById("loginForm");
 
-    const button =
-      document.getElementById(
-        "loginButton"
-      );
+    const portalCodeInput =
+      document.getElementById("portalCode");
+
+    const phoneInput =
+      document.getElementById("phone");
+
+    const loginButton =
+      document.getElementById("loginButton");
 
     const message =
-      document.getElementById(
-        "loginMessage"
-      );
+      document.getElementById("message");
 
 
-    // ---------------------------------
-    // MESSAGE FUNCTION
-    // ---------------------------------
+    /*
+     * =====================================================
+     * MESSAGE
+     * =====================================================
+     */
 
-    function showMessage(
-      text,
-      type
-    ) {
+    function showMessage(text, type) {
 
       message.textContent = text;
 
       message.className =
-        "message " + type;
+        "message show " + type;
 
     }
 
 
-    // ---------------------------------
-    // PHONE NORMALIZATION
-    // ---------------------------------
+    /*
+     * =====================================================
+     * PHONE NORMALIZATION
+     * =====================================================
+     */
 
     function normalizePhone(phone) {
 
@@ -413,26 +434,18 @@
           .trim();
 
 
-      if (
-        value.startsWith("+254")
-      ) {
+      if (value.startsWith("+254")) {
 
-        return (
-          "0" +
-          value.substring(4)
-        );
+        value =
+          "0" + value.substring(4);
 
       }
 
 
-      if (
-        value.startsWith("254")
-      ) {
+      if (value.startsWith("254")) {
 
-        return (
-          "0" +
-          value.substring(3)
-        );
+        value =
+          "0" + value.substring(3);
 
       }
 
@@ -442,171 +455,289 @@
     }
 
 
-    // ---------------------------------
-    // LOGIN
-    // ---------------------------------
+    /*
+     * =====================================================
+     * LOGIN
+     * =====================================================
+     */
 
     form.addEventListener(
       "submit",
-      async function (event) {
+      async function(event) {
 
         event.preventDefault();
 
 
         const portalCode =
-          document
-            .getElementById(
-              "portalCode"
-            )
-            .value
+          portalCodeInput.value
             .trim()
             .toUpperCase();
 
 
         const phone =
           normalizePhone(
-            document
-              .getElementById(
-                "phone"
-              )
-              .value
+            phoneInput.value
           );
 
 
-        if (
-          !portalCode ||
-          !phone
-        ) {
+        /*
+         * Basic validation
+         */
+
+        if (!portalCode) {
 
           showMessage(
-            "Please enter the portal code and registered phone number.",
+            "Please enter your child's portal code.",
             "error"
           );
 
           return;
+
         }
 
 
-        button.disabled = true;
+        if (!phone) {
 
-        button.textContent =
-          "Checking...";
+          showMessage(
+            "Please enter your registered parent phone number.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        /*
+         * Disable login
+         */
+
+        loginButton.disabled = true;
+
+        loginButton.textContent =
+          "Verifying...";
 
 
         showMessage(
-          "Verifying your parent account...",
+          "Verifying your details...",
           "info"
         );
 
 
         try {
 
-          // ---------------------------------
-          // STEP 1:
-          // VERIFY PORTAL CODE + PHONE
-          // ---------------------------------
+          /*
+           * =================================================
+           * CALL SUPABASE EDGE FUNCTION
+           * =================================================
+           */
 
-          const {
-            data,
-            error
-          } =
-            await supabase.functions.invoke(
-              "parent-login",
+          const functionUrl =
+            SUPABASE_URL +
+            "/functions/v1/parent-login";
+
+
+          const response =
+            await fetch(
+              functionUrl,
               {
-                body: {
+                method: "POST",
+
+                headers: {
+                  "Content-Type":
+                    "application/json",
+
+                  "apikey":
+                    SUPABASE_ANON_KEY,
+
+                  "Authorization":
+                    "Bearer " +
+                    SUPABASE_ANON_KEY
+                },
+
+                body: JSON.stringify({
+
                   portal_code:
                     portalCode,
 
                   phone:
                     phone
-                }
+
+                })
+
               }
             );
 
 
-          if (error) {
+          /*
+           * Try to read response
+           */
 
-            console.error(
-              "Function error:",
-              error
-            );
+          let result = null;
+
+
+          try {
+
+            result =
+              await response.json();
+
+          } catch {
+
+            result = null;
+
+          }
+
+
+          /*
+           * Function error
+           */
+
+          if (!response.ok) {
 
             throw new Error(
-              "Unable to connect to the parent login service."
+              result?.error ||
+              "Unable to verify your details."
             );
 
           }
 
 
-          if (
-            !data ||
-            !data.success
-          ) {
+          /*
+           * Make sure function succeeded
+           */
+
+          if (!result?.success) {
 
             throw new Error(
-              data?.error ||
-              "Login verification failed."
+              result?.error ||
+              "Unable to verify your details."
             );
 
           }
 
 
-          // ---------------------------------
-          // STEP 2:
-          // SIGN INTO SUPABASE AUTH
-          // ---------------------------------
+          /*
+           * Parent email is obtained internally.
+           *
+           * Parent does NOT need to type it.
+           */
 
-          showMessage(
-            "Verification successful. Signing you in...",
-            "info"
-          );
+          const parentEmail =
+            result.email;
 
+
+          if (!parentEmail) {
+
+            throw new Error(
+              "Your parent account does not have an email configured. Please contact the school."
+            );
+
+          }
+
+
+          /*
+           * =================================================
+           * SUPABASE AUTHENTICATION
+           * =================================================
+           *
+           * Email is handled internally.
+           *
+           * Phone number is the password.
+           */
 
           const {
             data: authData,
             error: authError
           } =
-            await supabase.auth.signInWithPassword(
-              {
-                email:
-                  data.email,
+            await supabase.auth.signInWithPassword({
 
-                password:
-                  phone
-              }
-            );
+              email:
+                parentEmail,
+
+              password:
+                phone
+
+            });
 
 
           if (authError) {
 
             console.error(
-              "Auth error:",
+              "Authentication error:",
               authError
             );
 
             throw new Error(
-              "Your parent account could not be signed in."
+              "Your details were found, but secure login could not be completed. Please contact the school."
             );
 
           }
 
 
-          if (
-            !authData ||
-            !authData.session
-          ) {
+          /*
+           * =================================================
+           * SAVE SESSION DATA
+           * =================================================
+           */
 
-            throw new Error(
-              "No secure login session was created."
+          if (result.student) {
+
+            sessionStorage.setItem(
+              "student_id",
+              String(result.student.id)
+            );
+
+
+            const studentName =
+              [
+                result.student.first_name,
+                result.student.middle_name,
+                result.student.last_name
+              ]
+              .filter(Boolean)
+              .join(" ");
+
+
+            sessionStorage.setItem(
+              "student_name",
+              studentName
+            );
+
+
+            sessionStorage.setItem(
+              "portal_code",
+              result.student.portal_code ||
+              portalCode
             );
 
           }
 
 
-          // ---------------------------------
-          // STEP 3:
-          // SAVE PORTAL INFORMATION
-          // ---------------------------------
+          if (result.parent) {
+
+            sessionStorage.setItem(
+              "parent_id",
+              String(result.parent.id)
+            );
+
+
+            sessionStorage.setItem(
+              "parent_name",
+              result.parent.full_name || ""
+            );
+
+          }
+
+
+          if (authData?.user?.id) {
+
+            sessionStorage.setItem(
+              "parent_user_id",
+              authData.user.id
+            );
+
+          }
+
 
           sessionStorage.setItem(
             "parent_logged_in",
@@ -614,49 +745,11 @@
           );
 
 
-          sessionStorage.setItem(
-            "student_id",
-            String(
-              data.student.id
-            )
-          );
-
-
-          sessionStorage.setItem(
-            "student_name",
-            [
-              data.student.first_name,
-              data.student.middle_name,
-              data.student.last_name
-            ]
-              .filter(Boolean)
-              .join(" ")
-          );
-
-
-          sessionStorage.setItem(
-            "portal_code",
-            data.student.portal_code
-          );
-
-
-          sessionStorage.setItem(
-            "parent_id",
-            String(
-              data.parent.id
-            )
-          );
-
-
-          sessionStorage.setItem(
-            "parent_name",
-            data.parent.full_name || ""
-          );
-
-
-          // ---------------------------------
-          // LOGIN SUCCESS
-          // ---------------------------------
+          /*
+           * =================================================
+           * SUCCESS
+           * =================================================
+           */
 
           showMessage(
             "Login successful. Opening your child's portal...",
@@ -664,39 +757,40 @@
           );
 
 
-          button.textContent =
-            "Opening Portal...";
-
+          /*
+           * Open dashboard
+           */
 
           setTimeout(
-            function () {
+            function() {
 
               window.location.href =
-                "dashboard.html";
+                "./dashboard.html";
 
             },
-            700
+            800
           );
 
 
         } catch (error) {
 
           console.error(
+            "Parent login error:",
             error
           );
 
 
           showMessage(
             error.message ||
-            "Unable to verify your details.",
+            "Unable to connect to the parent login service.",
             "error"
           );
 
 
-          button.disabled = false;
+          loginButton.disabled = false;
 
-          button.textContent =
-            "Login";
+          loginButton.textContent =
+            "Login to Parents Portal";
 
         }
 
@@ -706,5 +800,4 @@
   </script>
 
 </body>
-
-    </html>
+  </html>
