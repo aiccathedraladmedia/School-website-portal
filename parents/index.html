@@ -1,11 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Parents Portal | AIC Cathedral Comprehensive School</title>
-  <link rel="stylesheet" href="style.css">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Parents Portal | AIC Cathedral Comprehensive School
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="../css/style.css"
+  >
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+      background: #f4f7fb;
+      color: #172033;
+    }
+
+    .portal-page {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 480px;
+      background: white;
+      border-radius: 18px;
+      padding: 32px;
+      box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.10);
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .logo {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      background: #0b2d5c;
+      color: #f4c542;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      font-size: 22px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      color: #0b2d5c;
+      font-size: 25px;
+    }
+
+    .brand p {
+      margin: 6px 0 0;
+      color: #666;
+    }
+
+    .portal-title {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .portal-title span {
+      display: inline-block;
+      background: #f4c542;
+      color: #172033;
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .portal-title h2 {
+      margin: 5px 0 12px;
+      color: #0b2d5c;
+    }
+
+    .portal-title p {
+      color: #666;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ccd4df;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: #0b2d5c;
+      box-shadow:
+        0 0 0 3px rgba(11, 45, 92, 0.10);
+    }
+
+    .login-button {
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      background: #0b2d5c;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .login-button:hover {
+      opacity: 0.94;
+    }
+
+    .login-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .message {
+      display: none;
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 9px;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .message.info {
+      display: block;
+      background: #e9f2ff;
+      color: #174a8b;
+    }
+
+    .message.error {
+      display: block;
+      background: #ffecec;
+      color: #a30000;
+    }
+
+    .message.success {
+      display: block;
+      background: #eaf8ee;
+      color: #16713a;
+    }
+
+    .login-footer {
+      text-align: center;
+      margin-top: 24px;
+      color: #777;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .login-footer a {
+      color: #0b2d5c;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .login-footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 500px) {
+
+      .portal-page {
+        padding: 14px;
+      }
+
+      .login-card {
+        padding: 24px 18px;
+      }
+
+      .brand h1 {
+        font-size: 22px;
+      }
+
+    }
+
+  </style>
 </head>
+
 
 <body>
 
@@ -14,24 +226,40 @@
     <section class="login-card">
 
       <div class="brand">
-        <div class="logo">AIC</div>
 
-        <div>
-          <h1>AIC Cathedral</h1>
-          <p>Comprehensive School</p>
+        <div class="logo">
+          AIC
         </div>
-      </div>
 
-      <div class="portal-title">
-        <span>Parents Portal</span>
-
-        <h2>Welcome</h2>
+        <h1>
+          AIC Cathedral
+        </h1>
 
         <p>
-          Enter your child's portal code and your registered
-          phone number to continue.
+          Comprehensive School
         </p>
+
       </div>
+
+
+      <div class="portal-title">
+
+        <span>
+          Parents Portal
+        </span>
+
+        <h2>
+          Welcome
+        </h2>
+
+        <p>
+          Enter your child's portal code and
+          your registered phone number to
+          access the Parents Portal.
+        </p>
+
+      </div>
+
 
       <form id="loginForm">
 
@@ -46,6 +274,7 @@
             id="portalCode"
             placeholder="Example: 2D2777C121"
             autocomplete="off"
+            autocapitalize="characters"
             required
           >
 
@@ -69,11 +298,19 @@
         </div>
 
 
-        <button type="submit" id="loginButton">
+        <button
+          type="submit"
+          id="loginButton"
+          class="login-button"
+        >
           Login
         </button>
 
-        <div id="loginMessage" class="message"></div>
+
+        <div
+          id="loginMessage"
+          class="message"
+        ></div>
 
       </form>
 
@@ -81,7 +318,12 @@
       <div class="login-footer">
 
         <p>
-          Your child's portal code is provided by the school.
+          Your child's portal code is provided
+          by the school.
+        </p>
+
+        <p>
+          Keep your portal code private.
         </p>
 
         <a href="../index.html">
@@ -97,16 +339,22 @@
 
   <script type="module">
 
-    import { createClient } from
+    import {
+      createClient
+    }
+    from
       "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
 
-    const SUPABASE_URL =
-      "https://kadejswwappuvigiiyai.supabase.co";
+    // ---------------------------------
+    // SUPABASE CONFIGURATION
+    // ---------------------------------
 
+    const SUPABASE_URL =
+      "https://kadejswwapugivigiyai.supabase.co";
 
     const SUPABASE_KEY =
-      "sb_publishable_DlL8Q5i5ci55vX3OuhnwcQ_ONaNx7-k";
+      "sb_publishable_DlLBQ5iC15x5X3OuhnwcQ_0NAxN7-k";
 
 
     const supabase =
@@ -116,19 +364,34 @@
       );
 
 
-    const form =
-      document.getElementById("loginForm");
+    // ---------------------------------
+    // PAGE ELEMENTS
+    // ---------------------------------
 
+    const form =
+      document.getElementById(
+        "loginForm"
+      );
 
     const button =
-      document.getElementById("loginButton");
-
+      document.getElementById(
+        "loginButton"
+      );
 
     const message =
-      document.getElementById("loginMessage");
+      document.getElementById(
+        "loginMessage"
+      );
 
 
-    function showMessage(text, type) {
+    // ---------------------------------
+    // MESSAGE FUNCTION
+    // ---------------------------------
+
+    function showMessage(
+      text,
+      type
+    ) {
 
       message.textContent = text;
 
@@ -138,22 +401,38 @@
     }
 
 
+    // ---------------------------------
+    // PHONE NORMALIZATION
+    // ---------------------------------
+
     function normalizePhone(phone) {
 
       let value =
-        phone.replace(/\s+/g, "").trim();
+        phone
+          .replace(/\s+/g, "")
+          .trim();
 
 
-      if (value.startsWith("+254")) {
+      if (
+        value.startsWith("+254")
+      ) {
 
-        return "0" + value.substring(4);
+        return (
+          "0" +
+          value.substring(4)
+        );
 
       }
 
 
-      if (value.startsWith("254")) {
+      if (
+        value.startsWith("254")
+      ) {
 
-        return "0" + value.substring(3);
+        return (
+          "0" +
+          value.substring(3)
+        );
 
       }
 
@@ -163,16 +442,22 @@
     }
 
 
+    // ---------------------------------
+    // LOGIN
+    // ---------------------------------
+
     form.addEventListener(
       "submit",
-      async function(event) {
+      async function (event) {
 
         event.preventDefault();
 
 
         const portalCode =
           document
-            .getElementById("portalCode")
+            .getElementById(
+              "portalCode"
+            )
             .value
             .trim()
             .toUpperCase();
@@ -181,20 +466,24 @@
         const phone =
           normalizePhone(
             document
-              .getElementById("phone")
+              .getElementById(
+                "phone"
+              )
               .value
           );
 
 
-        if (!portalCode || !phone) {
+        if (
+          !portalCode ||
+          !phone
+        ) {
 
           showMessage(
-            "Please enter the portal code and phone number.",
+            "Please enter the portal code and registered phone number.",
             "error"
           );
 
           return;
-
         }
 
 
@@ -205,114 +494,119 @@
 
 
         showMessage(
-          "Verifying your details...",
+          "Verifying your parent account...",
           "info"
         );
 
 
         try {
 
-          /*
-           * Find the student using the
-           * automatically generated code.
-           */
+          // ---------------------------------
+          // STEP 1:
+          // VERIFY PORTAL CODE + PHONE
+          // ---------------------------------
 
           const {
-            data: student,
-            error: studentError
-          } = await supabase
-            .from("students")
-            .select(
-              "id, first_name, middle_name, last_name, portal_code"
-            )
-            .eq(
-              "portal_code",
-              portalCode
-            )
-            .maybeSingle();
+            data,
+            error
+          } =
+            await supabase.functions.invoke(
+              "parent-login",
+              {
+                body: {
+                  portal_code:
+                    portalCode,
 
-
-          if (studentError) {
-
-            throw studentError;
-
-          }
-
-
-          if (!student) {
-
-            throw new Error(
-              "Invalid student portal code."
-            );
-
-          }
-
-
-          /*
-           * Find a parent linked to this
-           * particular student.
-           */
-
-          const {
-            data: relationship,
-            error: relationshipError
-          } = await supabase
-            .from("student_parents")
-            .select(`
-              parent_id,
-              is_primary,
-              parents (
-                id,
-                full_name,
-                phone
-              )
-            `)
-            .eq(
-              "student_id",
-              student.id
-            );
-
-
-          if (relationshipError) {
-
-            throw relationshipError;
-
-          }
-
-
-          /*
-           * Compare the supplied phone number
-           * against the phone numbers of the
-           * parents linked to this student.
-           */
-
-          const matchedParent =
-            relationship?.find(
-              item => {
-
-                const parentPhone =
-                  normalizePhone(
-                    item.parents?.phone || ""
-                  );
-
-                return parentPhone === phone;
-
+                  phone:
+                    phone
+                }
               }
             );
 
 
-          if (!matchedParent) {
+          if (error) {
+
+            console.error(
+              "Function error:",
+              error
+            );
 
             throw new Error(
-              "The phone number does not match a parent registered for this student."
+              "Unable to connect to the parent login service."
             );
 
           }
 
 
-          /*
-           * Save the verified session information.
-           */
+          if (
+            !data ||
+            !data.success
+          ) {
+
+            throw new Error(
+              data?.error ||
+              "Login verification failed."
+            );
+
+          }
+
+
+          // ---------------------------------
+          // STEP 2:
+          // SIGN INTO SUPABASE AUTH
+          // ---------------------------------
+
+          showMessage(
+            "Verification successful. Signing you in...",
+            "info"
+          );
+
+
+          const {
+            data: authData,
+            error: authError
+          } =
+            await supabase.auth.signInWithPassword(
+              {
+                email:
+                  data.email,
+
+                password:
+                  phone
+              }
+            );
+
+
+          if (authError) {
+
+            console.error(
+              "Auth error:",
+              authError
+            );
+
+            throw new Error(
+              "Your parent account could not be signed in."
+            );
+
+          }
+
+
+          if (
+            !authData ||
+            !authData.session
+          ) {
+
+            throw new Error(
+              "No secure login session was created."
+            );
+
+          }
+
+
+          // ---------------------------------
+          // STEP 3:
+          // SAVE PORTAL INFORMATION
+          // ---------------------------------
 
           sessionStorage.setItem(
             "parent_logged_in",
@@ -322,16 +616,18 @@
 
           sessionStorage.setItem(
             "student_id",
-            String(student.id)
+            String(
+              data.student.id
+            )
           );
 
 
           sessionStorage.setItem(
             "student_name",
             [
-              student.first_name,
-              student.middle_name,
-              student.last_name
+              data.student.first_name,
+              data.student.middle_name,
+              data.student.last_name
             ]
               .filter(Boolean)
               .join(" ")
@@ -340,21 +636,27 @@
 
           sessionStorage.setItem(
             "portal_code",
-            student.portal_code
+            data.student.portal_code
           );
 
 
           sessionStorage.setItem(
             "parent_id",
-            String(matchedParent.parent_id)
+            String(
+              data.parent.id
+            )
           );
 
 
           sessionStorage.setItem(
             "parent_name",
-            matchedParent.parents.full_name || ""
+            data.parent.full_name || ""
           );
 
+
+          // ---------------------------------
+          // LOGIN SUCCESS
+          // ---------------------------------
 
           showMessage(
             "Login successful. Opening your child's portal...",
@@ -362,17 +664,26 @@
           );
 
 
-          setTimeout(() => {
+          button.textContent =
+            "Opening Portal...";
 
-            window.location.href =
-              "dashboard.html";
 
-          }, 700);
+          setTimeout(
+            function () {
+
+              window.location.href =
+                "dashboard.html";
+
+            },
+            700
+          );
 
 
         } catch (error) {
 
-          console.error(error);
+          console.error(
+            error
+          );
 
 
           showMessage(
@@ -395,4 +706,5 @@
   </script>
 
 </body>
+
     </html>
