@@ -526,6 +526,7 @@
 
         try {
 
+
           /*
            * =================================================
            * CALL SUPABASE EDGE FUNCTION
@@ -534,16 +535,18 @@
 
           const functionUrl =
             SUPABASE_URL +
-            "/functions/v1/parent-login";
+            "/functions/v1/parent-login-v2";
 
 
           const response =
             await fetch(
               functionUrl,
               {
+
                 method: "POST",
 
                 headers: {
+
                   "Content-Type":
                     "application/json",
 
@@ -553,6 +556,7 @@
                   "Authorization":
                     "Bearer " +
                     SUPABASE_ANON_KEY
+
                 },
 
                 body: JSON.stringify({
