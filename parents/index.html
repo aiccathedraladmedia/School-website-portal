@@ -621,62 +621,15 @@
 
 
           /*
-           * Parent email is obtained internally.
-           *
-           * Parent does NOT need to type it.
+           * Portal code + phone verification succeeded.
+           * Save the verified parent information.
            */
 
-          const parentEmail =
-            result.email;
+          const parent = result.parent;
 
-
-          if (!parentEmail) {
-
-            throw new Error(
-              "Your parent account does not have an email configured. Please contact the school."
-            );
-
+          if (!parent) {
+            throw new Error("Parent account was not found.");
           }
-
-
-          /*
-           * =================================================
-           * SUPABASE AUTHENTICATION
-           * =================================================
-           *
-           * Email is handled internally.
-           *
-           * Phone number is the password.
-           */
-
-          const {
-            data: authData,
-            error: authError
-          } =
-            await supabase.auth.signInWithPassword({
-
-              email:
-                parentEmail,
-
-              password:
-                phone
-
-            });
-
-
-          if (authError) {
-
-            console.error(
-              "Authentication error:",
-              authError
-            );
-
-            throw new Error(
-              "Your details were found, but secure login could not be completed. Please contact the school."
-            );
-
-          }
-
 
           /*
            * =================================================
