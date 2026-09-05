@@ -543,19 +543,19 @@
 
                         <button
                             class="action-button"
-                            onclick="alert('Attendance section coming next.')">
+                            onclick="showSection('attendance')">
                             Attendance
                         </button>
 
                         <button
                             class="action-button"
-                            onclick="alert('Results section coming next.')">
+                            onclick="showSection('results')">
                             Results
                         </button>
 
                         <button
                             class="action-button"
-                            onclick="alert('Fees section coming next.')">
+                            onclick="showSection('fees')">
                             Fees
                         </button>
 
@@ -597,6 +597,106 @@
 
     loadDashboard();
 
+</script>
+
+
+<!-- Parent Portal Sections -->
+<div id="portalSection" style="display:none;">
+
+  <section id="attendance" class="portal-section">
+    <div class="section-header">
+      <h2>Attendance</h2>
+      <button onclick="closeSection()">← Back</button>
+    </div>
+    <div class="portal-card">
+      <h3>Student Attendance</h3>
+      <p>View your child's attendance record.</p>
+      <div id="attendanceContent">
+        <p>Attendance records will appear here.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="results" class="portal-section">
+    <div class="section-header">
+      <h2>CBC Results</h2>
+      <button onclick="closeSection()">← Back</button>
+    </div>
+    <div class="portal-card">
+      <h3>Competency-Based Curriculum Results</h3>
+      <p>View your child's CBC academic performance and competencies.</p>
+      <div id="resultsContent">
+        <p>CBC results will appear here.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="fees" class="portal-section">
+    <div class="section-header">
+      <h2>Fees</h2>
+      <button onclick="closeSection()">← Back</button>
+    </div>
+    <div class="portal-card">
+      <h3>School Fees</h3>
+      <p>View fees, payments and outstanding balance.</p>
+      <div id="feesContent">
+        <p>Fee information will appear here.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<style>
+.portal-section {
+  display: none;
+  padding: 20px;
+}
+.portal-section.active {
+  display: block;
+}
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.section-header button {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.portal-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.08);
+}
+</style>
+
+<script>
+function showSection(sectionName) {
+  document.querySelectorAll('.portal-section').forEach(section => {
+    section.classList.remove('active');
+  });
+
+  const section = document.getElementById(sectionName);
+
+  if (section) {
+    document.getElementById('portalSection').style.display = 'block';
+    section.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function closeSection() {
+  document.querySelectorAll('.portal-section').forEach(section => {
+    section.classList.remove('active');
+  });
+
+  document.getElementById('portalSection').style.display = 'none';
+}
 </script>
 
 </body>
